@@ -8,11 +8,11 @@ package com.mycompany.percetakanbanner;
  *
  * @author acer
  */
-public class BannerIndoor extends PesananBanner {
+public class BannerIndoor extends PesananBanner implements DapatDinilai {
     private String tipeLaminasi;
     private static final double HARGA_PER_METER = 45000;
 
-    public BannerIndoor(String namaPelanggan, double panjang, double lebar, int jumlah, String tipeLaminasi) {
+    public BannerIndoor(String namaPelanggan, double panjang, double lebar, int jumlah, String tipeLaminasi) throws Exception {
         super(namaPelanggan, panjang, lebar, jumlah);
         this.tipeLaminasi = tipeLaminasi;
     }
@@ -35,13 +35,23 @@ public class BannerIndoor extends PesananBanner {
     }
 
     @Override
+    public void hitungDendaKeterlambatan() {
+        System.out.println(" -> Aturan Denda Keterlambatan Ambil: Rp15.000 / hari");
+    }
+
+    @Override
     public void tampilkanInfo() {
-        System.out.printf("[INDOOR]  Pelanggan: %-12s | Laminasi: %-12s | Ukuran: %.1fm x %.1fm | Jml: %d | Total: Rp%.0f%n",
+        System.out.printf("[INDOOR]      Pelanggan: %-12s | Laminasi: %-12s | Ukuran: %.1fm x %.1fm | Jml: %d | Total: Rp%.0f%n",
                 getNamaPelanggan(), this.tipeLaminasi, getPanjang(), getLebar(), getJumlah(), hitungTotalHarga());
     }
 
     @Override
     public void prosesCetak() {
-        System.out.println(" -> Proses: Dicetak dengan Mesin Ecosolvent High-Res + Finishing Laminasi " + this.tipeLaminasi + ".");
+        System.out.println(" -> Proses: Dicetak Mesin Ecosolvent High-Res + Press Finishing Laminasi " + this.tipeLaminasi + ".");
+    }
+
+    @Override
+    public void beriRating(int bintang) {
+        System.out.println(" -> Rating Pelanggan: Ketinggian resolusi indoor diberi rating " + bintang + "/5 bintang!");
     }
 }

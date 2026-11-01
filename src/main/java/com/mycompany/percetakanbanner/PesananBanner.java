@@ -8,7 +8,7 @@ package com.mycompany.percetakanbanner;
  *
  * @author acer
  */
-public class PesananBanner {
+public abstract class PesananBanner {
     private String namaPelanggan;
     private double panjang;
     private double lebar;
@@ -16,7 +16,13 @@ public class PesananBanner {
 
     public static int totalPesanan = 0;
 
-    public PesananBanner(String namaPelanggan, double panjang, double lebar, int jumlah) {
+    public PesananBanner(String namaPelanggan, double panjang, double lebar, int jumlah) throws Exception {
+        if (panjang <= 0 || lebar <= 0) {
+            throw new Exception("Ukuran panjang dan lebar banner harus lebih dari 0 meter!");
+        }
+        if (jumlah <= 0) {
+            throw new Exception("Jumlah pemesanan banner minimal 1 pcs!");
+        }
         this.namaPelanggan = namaPelanggan;
         this.panjang = panjang;
         this.lebar = lebar;
@@ -36,45 +42,42 @@ public class PesananBanner {
         return this.panjang;
     }
 
-    public void setPanjang(double panjang) {
-        if (panjang > 0) {
-            this.panjang = panjang;
-        } else {
-            System.out.println("Panjang harus lebih dari 0!");
+    public void setPanjang(double panjang) throws Exception {
+        if (panjang <= 0) {
+            throw new Exception("Panjang harus lebih dari 0!");
         }
+        this.panjang = panjang;
     }
 
     public double getLebar() {
         return this.lebar;
     }
 
-    public void setLebar(double lebar) {
-        if (lebar > 0) {
-            this.lebar = lebar;
-        } else {
-            System.out.println("Lebar harus lebih dari 0!");
+    public void setLebar(double lebar) throws Exception {
+        if (lebar <= 0) {
+            throw new Exception("Lebar harus lebih dari 0!");
         }
+        this.lebar = lebar;
     }
 
     public int getJumlah() {
         return this.jumlah;
     }
 
-    public void setJumlah(int jumlah) {
-        if (jumlah > 0) {
-            this.jumlah = jumlah;
-        } else {
-            System.out.println("Jumlah minimal 1!");
+    public void setJumlah(int jumlah) throws Exception {
+        if (jumlah <= 0) {
+            throw new Exception("Jumlah minimal 1!");
         }
+        this.jumlah = jumlah;
     }
 
     public double hitungLuas() {
         return this.panjang * this.lebar;
     }
 
-    public double hitungTotalHarga() {
-        return 0;
-    }
+    public abstract double hitungTotalHarga();
+
+    public abstract void hitungDendaKeterlambatan();
 
     public void tampilkanInfo() {
         System.out.printf("Pelanggan: %-15s | Ukuran: %.1fm x %.1fm | Jml: %d", 
@@ -82,6 +85,6 @@ public class PesananBanner {
     }
 
     public void prosesCetak() {
-        System.out.println("Pesanan sedang diproses di mesin cetak.");
+        System.out.println(" -> Proses: Pesanan sedang dicetak pada mesin standar.");
     }
 }
